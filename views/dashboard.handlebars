@@ -1,0 +1,9 @@
+{{#each posts}}
+  {{> post}}
+{{/each}}
+
+<form class="new-post-form">
+  <input type="text" id="post-title" placeholder="Post Title">
+  <textarea id="post-content" placeholder="Post Content"></textarea>
+  <button type="submit">Create Post</button>
+</form>
