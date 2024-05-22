@@ -43,3 +43,14 @@ User.init(
           return updatedUserData;
         },
       },
+
+      // Model configuration
+    sequelize,
+    timestamps: false, // Disable automatic addition of createdAt and updatedAt fields
+    freezeTableName: true, // Prevent Sequelize from renaming the table
+    underscored: true, // Use snake_case for automatically added fields
+    modelName: 'user', // Name of the model
+  }
+);
+
+module.exports = User;
