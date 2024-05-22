@@ -1,0 +1,127 @@
+/* Base styles for the body */
+body {
+    background-color: #000; /* Black background */
+    color: #ccc; /* Light grey text color */
+    font-family: 'Arial', sans-serif; /* Simple sans-serif font */
+    margin: 0;
+    padding: 0;
+    background-image: url('./public/img/grunge-texture.png'); /* Grunge texture background */
+    background-size: cover;
+    background-blend-mode: multiply; /* Blend the background for a grunge effect */
+  }
+  
+  /* Header styles */
+  header {
+    background-color: #111; /* Dark background */
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #444; /* Grey border */
+  }
+  
+  /* Main title in the header */
+  header h1 {
+    font-size: 3em; /* Large font size */
+    color: #e60000; /* Red color for the main header */
+    font-family: 'Impact', sans-serif; /* Bold, impactful font */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 2px; /* Spacing between letters */
+  }
+  
+  /* Navigation bar styles */
+  nav {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #222; /* Dark grey background */
+  }
+  
+  /* Navigation links */
+  nav a {
+    color: #ccc; /* Light grey text color */
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.2em; /* Slightly larger font size */
+    position: relative;
+  }
+  
+  /* Hover effect for navigation links */
+  nav a:hover {
+    color: #e60000; /* Red color on hover */
+    text-decoration: underline;
+  }
+  
+  /* Hover effect for navigation links */
+  nav a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #e60000; /* Red underline on hover */
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Show the underline on hover */
+  nav a:hover::before {
+    visibility: visible;
+    transform: scaleX(1);
+  }
+  
+  /* Container styles */
+  .container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    border: 1px solid #444; /* Grey border */
+    box-shadow: 0 0 10px #000; /* Black shadow */
+  }
+  
+  /* Styles for secondary headers */
+  h2 {
+    color: #e60000; /* Red text color */
+    font-family: 'Impact', sans-serif; /* Bold, impactful font */
+    text-transform: uppercase; /* Uppercase text */
+  }
+  
+  /* Paragraph styles */
+  p {
+    line-height: 1.6; /* Increased line height for readability */
+    color: #ddd; /* Light grey text color */
+  }
+  
+  /* Button styles */
+  .button {
+    background-color: #e60000; /* Red background */
+    color: #000; /* Black text color */
+    padding: 10px 20px;
+    text-transform: uppercase; /* Uppercase text */
+    text-decoration: none;
+    font-family: 'Arial', sans-serif; /* Simple sans-serif font */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+  
+  /* Hover effect for buttons */
+  .button:hover {
+    background-color: #c50000; /* Darker red on hover */
+  }
+  
+  /* Footer styles */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #111; /* Dark background */
+    border-top: 2px solid #444; /* Grey border */
+  }
+  
+  /* Footer text styles */
+  .footer p {
+    color: #888; /* Grey text color */
+    font-size: 0.9em; /* Smaller font size */
+  }
+  
