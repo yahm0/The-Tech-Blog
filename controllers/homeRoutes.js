@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Post, User } = require('../models');
+const bcrypt = require('bcrypt');
 
 // Homepage route
 router.get('/', async (req, res) => {
@@ -57,6 +58,25 @@ router.get('/login', (req, res) => {
 // Signup route
 router.get('/signup', (req, res) => {
     res.render('signup', { title: 'Sign Up' });
+});
+
+// Handle signup form submission
+router.post('/signup', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const newUser = await User.create({
+            username: req.body.username,
+            email: req.body.email,
+            password: hashedPassword,
+        });
+        req.session.save(() => {
+            req.session.user_id = newUser.id;
+            req.session.logged_in = true;
+            res.status(200).json(newUser);
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
 module.exports = router;
