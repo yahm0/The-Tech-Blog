@@ -8,16 +8,7 @@
 </head>
 <body>
   <header>
-    <nav>
-      <a href="/">Home</a>
-      {{#if logged_in}}
-        <a href="/dashboard">Dashboard</a>
-        <a href="/logout">Logout</a>
-      {{else}}
-        <a href="/login">Login</a>
-        <a href="/signup">Sign Up</a>
-      {{/if}}
-    </nav>
+    {{> navbar}}
     <h1>The Tech Blog</h1>
   </header>
   <main>
