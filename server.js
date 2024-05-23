@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 3001;
 
 const hbs = exphbs.create({ helpers });
 
-console.log('Session Secret:', process.env.SESSION_SECRET); // Add this line
+console.log('Session Secret:', process.env.SESSION_SECRET); // Logging SESSION_SECRET for verification
 
 const sess = {
   secret: process.env.SESSION_SECRET, // Ensure this is set in your environment variables
