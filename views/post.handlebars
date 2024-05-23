@@ -1,0 +1,25 @@
+<article>
+  <header>
+    <h2>{{post.title}}</h2>
+    <p>Posted by {{post.user.username}} on {{post.createdAt}}</p>
+  </header>
+  <section>
+    <p>{{post.content}}</p>
+  </section>
+  <section>
+    <h3>Comments</h3>
+    {{#each post.comments}}
+      <div>
+        <p>{{this.comment_text}}</p>
+        <p>Commented by {{this.user.username}} on {{this.createdAt}}</p>
+      </div>
+    {{/each}}
+  </section>
+</article>
+{{#if logged_in}}
+  <form action="/comment" method="post">
+    <input type="hidden" name="post_id" value="{{post.id}}">
+    <textarea name="comment_text" required></textarea>
+    <button type="submit">Add Comment</button>
+  </form>
+{{/if}}

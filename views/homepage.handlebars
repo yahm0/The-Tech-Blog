@@ -1,13 +1,11 @@
-<main>
-  {{#each posts}}
-    <article>
-      <header>
-        <h2>{{this.title}}</h2>
-        <p>Posted by {{this.user.username}} on {{this.createdAt}}</p>
-      </header>
-      <section>
-        <p>{{this.content}}</p>
-      </section>
-    </article>
-  {{/each}}
-</main>
+{{#each posts}}
+  <article>
+    <header>
+      <h2>{{this.title}}</h2>
+      <p>Posted by {{this.user.username}} on {{this.createdAt}}</p>
+    </header>
+    <section>
+      <p>{{this.content}}</p>
+    </section>
+  </article>
+{{/each}}

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Post, User, Comment } = require('../models');
 const bcrypt = require('bcrypt');
-const withAuth = require('../utils/auth'); // Middleware to protect routes
+const withAuth = require('../utils/auth');
 
 // Homepage route
 router.get('/', async (req, res) => {
@@ -160,7 +160,7 @@ router.delete('/dashboard/delete/:id', withAuth, async (req, res) => {
 
         res.status(200).json(postData);
     } catch (err) {
-        res.status(500).json(err);
+        res.status{500}.json(err);
     }
 });
 
