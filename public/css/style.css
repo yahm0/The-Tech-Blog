@@ -5,7 +5,7 @@ body {
     font-family: 'Arial', sans-serif; /* Simple sans-serif font */
     margin: 0;
     padding: 0;
-    background-image: url('./public/img/grunge-texture.png'); /* Grunge texture background */
+    background-image: url('./img/grunge-texture.png'); /* Grunge texture background */
     background-size: cover;
     background-blend-mode: multiply; /* Blend the background for a grunge effect */
   }
