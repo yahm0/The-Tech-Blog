@@ -1,25 +1,26 @@
-const commentFormHandler = async (event) => {
-    event.preventDefault();
-  
-    const comment_text = document.querySelector('#comment-text').value.trim();
-    const post_id = window.location.toString().split('/').pop();
-  
-    if (comment_text) {
-      const response = await fetch(`/api/comments`, {
-        method: 'POST',
-        body: JSON.stringify({ post_id, comment_text }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-  
-      if (response.ok) {
-        document.location.reload();
-      } else {
-        alert(response.statusText);
-      }
-    }
-  };
-  
-  document
-    .querySelector('.comment-form')
-    .addEventListener('submit', commentFormHandler);
-  
+document.addEventListener('DOMContentLoaded', () => {
+    const commentForms = document.querySelectorAll('.comment-form');
+
+    commentForms.forEach(form => {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const postId = form.getAttribute('data-post-id');
+            const commentText = form.querySelector('#comment-text').value.trim();
+
+            if (commentText) {
+                const response = await fetch(`/api/comments`, {
+                    method: 'POST',
+                    body: JSON.stringify({ post_id: postId, comment_text: commentText }),
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                if (response.ok) {
+                    document.location.reload();
+                } else {
+                    alert('Failed to add comment');
+                }
+            }
+        });
+    });
+});

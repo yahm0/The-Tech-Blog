@@ -56,7 +56,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
 // Login route
 router.get('/login', (req, res) => {
     if (req.session.logged_in) {
-        res.redirect('/');
+        res.redirect('/dashboard');
         return;
     }
     res.render('login', { title: 'Login' });
@@ -65,7 +65,7 @@ router.get('/login', (req, res) => {
 // Signup route
 router.get('/signup', (req, res) => {
     if (req.session.logged_in) {
-        res.redirect('/');
+        res.redirect('/dashboard');
         return;
     }
     res.render('signup', { title: 'Sign Up' });
@@ -74,16 +74,16 @@ router.get('/signup', (req, res) => {
 // Handle signup form submission
 router.post('/signup', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = await User.create({
             username: req.body.username,
             email: req.body.email,
-            password: hashedPassword,
+            password: req.body.password,
         });
+
         req.session.save(() => {
             req.session.user_id = newUser.id;
             req.session.logged_in = true;
-            res.redirect('/'); // Redirect to homepage after signup
+            res.redirect('/dashboard'); // Redirect to dashboard after signup
         });
     } catch (err) {
         res.status(500).json(err);
@@ -93,25 +93,26 @@ router.post('/signup', async (req, res) => {
 // Handle login form submission
 router.post('/login', async (req, res) => {
     try {
-        const userData = await User.findOne({ where: { email: req.body.email } });
+        const user = await User.findOne({ where: { email: req.body.email } });
 
-        if (!userData) {
-            res.status(400).json({ message: 'Incorrect email or password, please try again' });
+        if (!user) {
+            res.status(400).json({ message: 'No user with that email address!' });
             return;
         }
 
-        const validPassword = await bcrypt.compare(req.body.password, userData.password);
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
 
         if (!validPassword) {
-            res.status(400).json({ message: 'Incorrect email or password, please try again' });
+            res.status(400).json({ message: 'Incorrect password!' });
             return;
         }
 
         req.session.save(() => {
-            req.session.user_id = userData.id;
+            req.session.user_id = user.id;
             req.session.logged_in = true;
-            res.redirect('/');
+            res.redirect('/dashboard'); // Redirect to dashboard after login
         });
+
     } catch (err) {
         res.status(500).json(err);
     }
@@ -128,8 +129,111 @@ router.post('/logout', (req, res) => {
     }
 });
 
+// Handle creating a new post
+router.post('/dashboard/new', withAuth, async (req, res) => {
+    try {
+        const newPost = await Post.create({
+            ...req.body,
+            user_id: req.session.user_id,
+        });
 
+        res.status(200).json(newPost);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
+// Handle deleting a post
+router.delete('/dashboard/delete/:id', withAuth, async (req, res) => {
+    try {
+        const postData = await Post.destroy({
+            where: {
+                id: req.params.id,
+                user_id: req.session.user_id,
+            },
+        });
 
+        if (!postData) {
+            res.status(404).json({ message: 'No post found with this id!' });
+            return;
+        }
+
+        res.status(200).json(postData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Handle commenting on a post
+router.post('/comment', withAuth, async (req, res) => {
+    try {
+        const newComment = await Comment.create({
+            ...req.body,
+            user_id: req.session.user_id,
+        });
+
+        res.status(200).json(newComment);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Individual post route
+router.get('/post/:id', async (req, res) => {
+    try {
+        const postData = await Post.findByPk(req.params.id, {
+            include: [
+                {
+                    model: User,
+                    attributes: ['username'],
+                },
+                {
+                    model: Comment,
+                    include: [User],
+                }
+            ],
+        });
+
+        if (!postData) {
+            res.status(404).json({ message: 'No post found with this id!' });
+            return;
+        }
+
+        const post = postData.get({ plain: true });
+
+        res.render('post', {
+            post,
+            title: post.title,
+            logged_in: req.session.logged_in,
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+router.get('/', withAuth, async (req, res) => {
+    try {
+      // Get all posts
+      const postData = await Post.findAll({
+        include: [
+          {
+            model: User,
+            attributes: ['username'],
+          },
+        ],
+      });
+  
+      // Serialize data so the template can read it
+      const posts = postData.map((post) => post.get({ plain: true }));
+  
+      // Pass serialized data and session flag into template
+      res.render('homepage', {
+        posts,
+        logged_in: req.session.logged_in,
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
 module.exports = router;

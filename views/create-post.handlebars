@@ -1,0 +1,22 @@
+{{!-- Import the main layout --}}
+{{> header}}
+
+<div class="container">
+  <h2>Create a New Post</h2>
+  <form id="create-post-form">
+    <div class="form-group">
+      <label for="post-title">Title</label>
+      <input type="text" id="post-title" name="title" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="post-content">Content</label>
+      <textarea id="post-content" name="content" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Post</button>
+  </form>
+</div>
+
+<script src="/js/create-post.js"></script>
+
+{{!-- Import the footer partial --}}
+{{> footer}}
