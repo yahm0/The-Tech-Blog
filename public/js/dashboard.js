@@ -1,44 +1,25 @@
-const newFormHandler = async (event) => {
+document.querySelector('.new-post-form').addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const title = document.querySelector('#post-title').value.trim();
     const content = document.querySelector('#post-content').value.trim();
 
     if (title && content) {
-        const response = await fetch('/dashboard/new', {
-            method: 'POST',
-            body: JSON.stringify({ title, content }),
-            headers: { 'Content-Type': 'application/json' },
-        });
+        try {
+            const response = await fetch('/api/posts', {
+                method: 'POST',
+                body: JSON.stringify({ title, content }),
+                headers: { 'Content-Type': 'application/json' },
+            });
 
-        if (response.ok) {
-            document.location.replace('/dashboard');
-        } else {
-            alert('Failed to create post');
+            if (response.ok) {
+                document.location.replace('/dashboard'); // Reload the dashboard to show the new post
+            } else {
+                alert('Failed to create post.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to create post: ' + error.message);
         }
     }
-};
-
-const delButtonHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
-        const id = event.target.getAttribute('data-id');
-
-        const response = await fetch(`/dashboard/delete/${id}`, {
-            method: 'DELETE',
-        });
-
-        if (response.ok) {
-            document.location.replace('/dashboard');
-        } else {
-            alert('Failed to delete post');
-        }
-    }
-};
-
-document
-    .querySelector('.new-post-form')
-    .addEventListener('submit', newFormHandler);
-
-document
-    .querySelector('.post-list')
-    .addEventListener('click', delButtonHandler);
+});
