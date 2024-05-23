@@ -72,7 +72,7 @@ router.post('/signup', async (req, res) => {
         req.session.save(() => {
             req.session.user_id = newUser.id;
             req.session.logged_in = true;
-            res.status(200).json(newUser);
+            res.redirect('/'); // Redirect to homepage after signup
         });
     } catch (err) {
         res.status(500).json(err);
