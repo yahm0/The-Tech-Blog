@@ -34,4 +34,4 @@ Visit the site and sign up or log in to start creating and commenting on posts.
 [Heroku Link to the tech blog](https://the-tech-blog-heroku-ee1a62949e0b.herokuapp.com/)
 
 ### Screenshot of Deployed Application
-![Screenshot](path/to/your/screenshot.png)
+![Screenshot](public/imgs/homepage-tech-blog.png)
