@@ -4,6 +4,24 @@ const { Post, User, Comment } = require('../models');
 const bcrypt = require('bcrypt');
 const withAuth = require('../utils/auth'); // Middleware to protect routes
 
+// Login route
+router.get('/login', (req, res) => {
+    if (req.session.logged_in) {
+        res.redirect('/dashboard');
+        return;
+    }
+    res.render('login', { title: 'Login' });
+});
+
+// Signup route
+router.get('/signup', (req, res) => {
+    if (req.session.logged_in) {
+        res.redirect('/dashboard');
+        return;
+    }
+    res.render('signup', { title: 'Sign Up' });
+});
+
 // Homepage route
 router.get('/', async (req, res) => {
     try {
@@ -51,24 +69,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
     } catch (err) {
         res.status(500).json(err);
     }
-});
-
-// Login route
-router.get('/login', (req, res) => {
-    if (req.session.logged_in) {
-        res.redirect('/dashboard');
-        return;
-    }
-    res.render('login', { title: 'Login' });
-});
-
-// Signup route
-router.get('/signup', (req, res) => {
-    if (req.session.logged_in) {
-        res.redirect('/dashboard');
-        return;
-    }
-    res.render('signup', { title: 'Sign Up' });
 });
 
 // Handle signup form submission
