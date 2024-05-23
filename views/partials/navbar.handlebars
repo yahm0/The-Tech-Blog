@@ -1,7 +1,10 @@
 <nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/login">Login</a></li>
-    <li><a href="/signup">Signup</a></li>
-  </ul>
+  <a href="/">Home</a>
+  {{#if logged_in}}
+    <a href="/dashboard">Dashboard</a>
+    <a href="/logout">Logout</a>
+  {{else}}
+    <a href="/login">Login</a>
+    <a href="/signup">Sign Up</a>
+  {{/if}}
 </nav>
