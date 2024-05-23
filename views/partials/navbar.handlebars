@@ -1,7 +1,16 @@
 <nav>
   <ul>
     <li><a href="/">Home</a></li>
-    <li><a href="/login">Login</a></li>
-    <li><a href="/signup">Signup</a></li>
+    {{#if logged_in}}
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li>
+        <form action="/logout" method="post" style="display: inline;">
+          <button type="submit" style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; padding: 0;">Logout</button>
+        </form>
+      </li>
+    {{else}}
+      <li><a href="/login">Login</a></li>
+      <li><a href="/signup">Signup</a></li>
+    {{/if}}
   </ul>
 </nav>
