@@ -1,5 +1,12 @@
 # The Tech Blog
 
+## Table of Contents
+- [Description](#description)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Deployed Application](#deployed-application)
+
 ## Description
 A CMS-style blog site where developers can publish their blog posts and comment on other developers’ posts.
 
@@ -25,3 +32,6 @@ Visit the site and sign up or log in to start creating and commenting on posts.
 
 ## Deployed Application
 [Heroku Link](#)
+
+### Screenshot of Deployed Application
+![Screenshot](path/to/your/screenshot.png)
